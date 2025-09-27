@@ -361,3 +361,19 @@ h1 {
         flex-direction: column;
     }
 }
+
+/* Footer */
+.footer {
+    background: rgba(15, 15, 35, 0.9);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 4rem;
+    backdrop-filter: blur(10px);
+}
+
+.footer p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin: 0;
+}
