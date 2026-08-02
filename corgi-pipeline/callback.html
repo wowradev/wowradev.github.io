@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corgi Pipeline — Authorization | Wowra Dev</title>
+    <meta name="description" content="OAuth callback for the Corgi Pipeline TikTok publishing tool">
+    <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="bg-grid" aria-hidden="true"></div>
+
+    <header class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="../" class="brand" aria-label="Wowra Dev home">
+                Wowra <em>Dev</em>
+            </a>
+        </div>
+    </header>
+
+    <main class="legal-wrap container">
+        <article class="legal">
+            <h1>TikTok authorization received</h1>
+            <p id="status">Reading authorization response…</p>
+            <p><code id="code-box" style="display:block; padding:12px; word-break:break-all; user-select:all;"></code></p>
+            <p><button id="copy-btn" class="nav-cta" style="display:none; border:0; cursor:pointer;">Copy code</button></p>
+            <p>Return to the pipeline terminal and paste the code when prompted. You can close this tab afterwards.</p>
+        </article>
+    </main>
+
+    <script>
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var code = params.get("code");
+            var error = params.get("error");
+            var status = document.getElementById("status");
+            var box = document.getElementById("code-box");
+            var btn = document.getElementById("copy-btn");
+            if (error) {
+                status.textContent = "Authorization failed: " + error + " — " + (params.get("error_description") || "no description");
+            } else if (code) {
+                status.textContent = "Success! Your authorization code:";
+                box.textContent = code;
+                btn.style.display = "inline-flex";
+                btn.addEventListener("click", function () {
+                    navigator.clipboard.writeText(code).then(function () {
+                        btn.textContent = "Copied ✓";
+                    });
+                });
+            } else {
+                status.textContent = "No authorization code found in the URL. Start the login again from the pipeline.";
+            }
+        })();
+    </script>
+</body>
+</html>
